@@ -1,35 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+/**
+ * Main application component
+ *
+ * This is a simplified version to test the Search System.
+ * In later phases we will add routing, complete layout, etc.
+ */
+import { SearchBar } from '@/features/search/SearchBar';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+    <div className="min-h-screen bg-background text-text p-8">
+      {/* Header */}
+      <header className="mb-8 text-center">
+        <h1 className="text-4xl font-bold text-primary mb-2">
+          Reddit Client
+        </h1>
+        <p className="text-text-secondary">
+          Phase 3: Search System with Debouncing
         </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      </header>
+
+      {/* Main Content */}
+      <main>
+        <SearchBar />
+      </main>
+
+      {/* Footer */}
+      <footer className="mt-12 text-center text-sm text-text-secondary">
+        <p>
+          Real-time search using{' '}
+          <span className="text-primary">RTK Query</span> +{' '}
+          <span className="text-primary">useDebounce</span>
+        </p>
+        <p className="mt-2">
+          💡 Type at least 3 characters to search
+        </p>
+      </footer>
+    </div>
+  );
 }
 
-export default App
+export default App;
