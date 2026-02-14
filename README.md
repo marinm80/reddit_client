@@ -24,30 +24,50 @@
 
 ## ✨ Features
 
-### ✅ Implemented (Phase 1-3)
+### ✅ Implemented (Phase 1-3 Complete)
 
-- **Search System** with debouncing (500ms delay)
+- **🔍 Search System** with debouncing (500ms delay)
   - Real-time search across all subreddits
   - Minimum 3 characters validation
   - Loading and error states
   - Clear search button
 
-- **RTK Query Integration**
+- **📋 Subreddit Filters**
+  - 12 popular subreddits (Popular, All, ReactJS, Programming, etc.)
+  - Custom subreddit input with validation
+  - URL persistence (shareable links)
+  - Visual feedback for active subreddit
+
+- **💬 Comments System**
+  - Recursive nested threading (unlimited depth)
+  - Color-coded depth indicators
+  - OP badges and pinned comments
+  - Post detail modal with keyboard navigation
+  - "Load more" placeholder for collapsed threads
+
+- **♾️ Infinite Scroll**
+  - Auto-load posts on scroll
+  - Pagination with Reddit's "after" cursor
+  - Loading indicators
+
+- **🔄 Sort & Time Filters**
+  - Sort: Hot, Top, New, Rising
+  - Time filters for Top posts: Hour, Day, Week, Month, Year, All
+
+- **📦 RTK Query Integration**
   - Automatic caching and request deduplication
   - Type-safe API calls
   - Auto-generated React hooks
 
-- **Custom Hooks**
-  - `useDebounce` - Optimizes rapid input changes
-
-- **Modern UI**
+- **🎨 Modern UI**
   - Dark mode design
   - Responsive layout
   - Tailwind CSS 4 utility classes
+  - Image error handling with placeholders
 
-### 🔄 In Progress (Phase 3)
+### 🔄 In Progress (Phase 4)
 
-- Subreddit filters
+- Unit testing with Vitest
 - Comments system with nested threading
 - Animations and transitions
 
@@ -105,25 +125,36 @@ The app will be available at `http://localhost:5173`
 ```
 reddit-client/
 ├── src/
-│   ├── app/                    # Redux store configuration
-│   │   ├── store.ts            # Store setup with RTK Query
-│   │   └── hooks.ts            # Typed useAppDispatch/useAppSelector
-│   ├── features/               # Feature-based organization
+│   ├── app/                          # Redux store configuration
+│   │   ├── store.ts                  # Store setup with RTK Query
+│   │   └── hooks.ts                  # Typed useAppDispatch/useAppSelector
+│   ├── features/                     # Feature-based organization
 │   │   ├── posts/
-│   │   │   └── postsApi.ts     # RTK Query API endpoints
+│   │   │   ├── postsApi.ts           # RTK Query API endpoints
+│   │   │   ├── postsSlice.ts         # Redux local state
+│   │   │   ├── PostCard.tsx          # Post card component
+│   │   │   ├── PostList.tsx          # Post list container
+│   │   │   └── PostDetail.tsx        # Post detail modal
+│   │   ├── subreddits/
+│   │   │   ├── SubredditFilter.tsx   # Subreddit filter sidebar
+│   │   │   └── constants.ts          # Popular subreddits list
+│   │   ├── comments/
+│   │   │   ├── Comment.tsx           # Recursive comment component
+│   │   │   └── CommentList.tsx       # Comment list container
 │   │   └── search/
-│   │       └── SearchBar.tsx   # Search component with debouncing
-│   ├── hooks/                  # Custom React hooks
-│   │   └── useDebounce.ts      # Debounce hook for search
-│   ├── components/             # Shared components
-│   ├── types/                  # TypeScript type definitions
-│   │   └── reddit.ts           # Reddit API types
-│   ├── utils/                  # Utility functions
-│   │   ├── cn.ts               # Tailwind class merger
-│   │   └── formatters.ts       # Data formatters
-│   └── App.tsx                 # Main app component
-├── CLAUDE.md                   # Development guidelines
-├── ROADMAP.md                  # Project phases and progress
+│   │       └── SearchBar.tsx         # Search with debouncing
+│   ├── hooks/                        # Custom React hooks
+│   │   └── useDebounce.ts            # Debounce hook for search
+│   ├── components/                   # Shared components
+│   ├── types/                        # TypeScript type definitions
+│   │   └── reddit.ts                 # Reddit API types
+│   ├── utils/                        # Utility functions
+│   │   ├── cn.ts                     # Tailwind class merger
+│   │   └── formatters.ts             # Data formatters
+│   └── App.tsx                       # Main app component
+├── CLAUDE.md                         # Development guidelines
+├── ROADMAP.md                        # Project phases and progress
+├── PHASE3_SUMMARY.md                 # Phase 3 completion summary
 └── package.json
 ```
 
@@ -160,15 +191,24 @@ npm run test:e2e         # Run E2E tests with Playwright
 
 ## 📊 Phase Progress
 
-| Phase | Status | Progress |
-|-------|--------|----------|
-| Phase 1: Initial Setup | ✅ Complete | 100% |
-| Phase 2: Core Functionality | ✅ Complete | 100% |
-| Phase 3: Additional Features | 🔄 In Progress | 60% |
-| Phase 4: Testing & Quality | ⏳ Pending | 0% |
-| Phase 5: Polish & Deploy | ⏳ Pending | 0% |
+| Phase | Status | Progress | Completed |
+|-------|--------|----------|-----------|
+| Phase 1: Initial Setup | ✅ Complete | 100% | ✅ |
+| Phase 2: Core Functionality | ✅ Complete | 100% | ✅ |
+| **Phase 3: Additional Features** | ✅ **Complete** | **100%** | **2026-02-14** |
+| Phase 4: Testing & Quality | ⏳ Pending | 0% | - |
+| Phase 5: Polish & Deploy | ⏳ Pending | 0% | - |
 
-See [ROADMAP.md](./ROADMAP.md) for detailed task breakdown.
+**Overall Progress**: 60% (3/5 phases complete)
+
+### Phase 3 Achievements ✨
+- ✅ Search System with debouncing
+- ✅ Subreddit Filters (12 popular + custom)
+- ✅ Sort & Time Filters
+- ✅ **Comments System** (recursive threading)
+- ✅ Infinite Scroll
+
+See [ROADMAP.md](./ROADMAP.md) for detailed task breakdown and [PHASE3_SUMMARY.md](./PHASE3_SUMMARY.md) for Phase 3 completion summary.
 
 ---
 
