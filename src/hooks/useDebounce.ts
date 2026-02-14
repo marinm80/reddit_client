@@ -1,57 +1,57 @@
 import { useState, useEffect } from "react";
 
 /**
- * Hook personalizado para aplicar debouncing a un valor.
+ * Custom hook to apply debouncing to a value.
  *
- * @template T - Tipo del valor a hacer debounce (puede ser string, number, object, etc.)
- * @param value - El valor que cambia frecuentemente (ej: input del usuario)
- * @param delay - Tiempo de espera en milisegundos antes de actualizar (default: 500ms)
- * @returns El valor debounced que solo se actualiza después del delay
+ * @template T - Type of the value to debounce (can be string, number, object, etc.)
+ * @param value - The value that changes frequently (e.g.: user input)
+ * @param delay - Wait time in milliseconds before updating (default: 500ms)
+ * @returns The debounced value that only updates after the delay
  *
  * @example
  * ```tsx
  * const [searchTerm, setSearchTerm] = useState('');
  * const debouncedSearch = useDebounce(searchTerm, 500);
  *
- * // debouncedSearch solo se actualiza 500ms después de que el usuario deja de escribir
+ * // debouncedSearch only updates 500ms after the user stops typing
  * useSearchPostsQuery(debouncedSearch, { skip: debouncedSearch.length < 3 });
  * ```
  *
- * **Concepto clave: "Fiscal de Tránsito"**
- * - Imagina que cada tecla presionada es un auto pasando
- * - El fiscal (este hook) espera a que no pasen más autos por X tiempo
- * - Solo cuando pasa el tiempo sin tráfico, permite continuar
- * - Si pasa otro auto antes del tiempo, reinicia el cronómetro
+ * **Key concept: "Traffic Officer"**
+ * - Imagine that each key pressed is a car passing by
+ * - The officer (this hook) waits for no more cars to pass for X time
+ * - Only when the time passes without traffic, allows to continue
+ * - If another car passes before the time, resets the timer
  *
- * **Por qué es importante:**
- * - Evita hacer llamadas a la API por cada tecla presionada
- * - Mejora performance al reducir re-renders innecesarios
- * - Respeta los rate limits de las APIs (Reddit: ~10 req/min)
- * - Mejor UX: resultados no cambian constantemente mientras escribes
+ * **Why it's important:**
+ * - Avoids making API calls for each key pressed
+ * - Improves performance by reducing unnecessary re-renders
+ * - Respects API rate limits (Reddit: ~10 req/min)
+ * - Better UX: results don't change constantly while typing
  */
 export function useDebounce<T>(value: T, delay: number = 500): T {
-    // Estado local que guardará el valor debounced
-    // Este valor solo cambia después del delay, no en cada cambio de 'value'
+    // Local state that will store the debounced value
+    // This value only changes after the delay, not on every 'value' change
     const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
     useEffect(() => {
-        // Crear un timer que actualizará debouncedValue después del delay
-        // Esto es como el "fiscal" esperando a que no haya más tráfico
+        // Create a timer that will update debouncedValue after the delay
+        // This is like the "officer" waiting for no more traffic
         const handler = setTimeout(() => {
             setDebouncedValue(value);
         }, delay);
 
-        // Cleanup function: Se ejecuta cuando:
-        // 1. El componente se desmonta, O
-        // 2. 'value' o 'delay' cambian (antes de ejecutar el nuevo effect)
+        // Cleanup function: Executes when:
+        // 1. The component unmounts, OR
+        // 2. 'value' or 'delay' change (before executing the new effect)
         //
-        // Si 'value' cambia antes de que termine el delay, cancelamos el timer
-        // anterior y creamos uno nuevo. Esto reinicia el cronómetro.
-        // Es como cuando pasa otro auto y el fiscal reinicia su cuenta.
+        // If 'value' changes before the delay finishes, we cancel the previous
+        // timer and create a new one. This resets the timer.
+        // It's like when another car passes and the officer resets his count.
         return () => {
             clearTimeout(handler);
         };
-    }, [value, delay]); // Re-ejecutar cuando value o delay cambien
+    }, [value, delay]); // Re-execute when value or delay change
 
     return debouncedValue;
 }
