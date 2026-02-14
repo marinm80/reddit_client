@@ -1,10 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { redditApi } from '../features/posts/postsApi'; // This will be created later
+import { redditApi } from '../features/posts/postsApi';
+import postsReducer from '../features/posts/postsSlice';
 
 export const store = configureStore({
   reducer: {
-    // Add the generated reducer as a specific top-level slice
+    // RTK Query API reducer
     [redditApi.reducerPath]: redditApi.reducer,
+    // Local UI state reducer
+    posts: postsReducer,
   },
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.

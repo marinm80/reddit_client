@@ -12,7 +12,12 @@
  * Documentation: https://redux-toolkit.js.org/rtk-query/overview
  */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { RedditListing, GetPostsParams } from '@/types/reddit';
+import type {
+  RedditListing,
+  GetPostsParams,
+  GetPostCommentsParams,
+  PostCommentsResponse
+} from '@/types/reddit';
 
 /**
  * Main API for Reddit
@@ -111,6 +116,33 @@ export const redditApi = createApi({
       // We don't want to invalidate search results when new posts are added
       // providesTags: [], // could be ['SearchResults'] if we wanted invalidation
     }),
+
+    /**
+     * Gets a single post with all its comments
+     *
+     * Endpoint: GET /r/{subreddit}/comments/{postId}.json
+     * Example: /r/reactjs/comments/abc123.json
+     *
+     * CONCEPT - Reddit Comment Structure:
+     * Reddit returns an array of TWO listings:
+     * [0] = Listing with 1 post (the original post)
+     * [1] = Listing with comments (nested tree structure)
+     *
+     * Each comment can have 'replies' which is another Listing with more comments.
+     * This creates a recursive tree structure that can be infinitely deep.
+     */
+    getPostComments: builder.query<PostCommentsResponse, GetPostCommentsParams>({
+      query: ({ subreddit, postId }) => {
+        // Reddit URL format: /r/{subreddit}/comments/{postId}.json
+        return `/r/${subreddit}/comments/${postId}.json`;
+      },
+
+      // Provide 'Comments' tag for cache invalidation
+      providesTags: ['Comments'],
+
+      // IMPORTANT: We don't transform the response here because we want
+      // to keep the original structure [post, comments] for easier parsing
+    }),
   }),
 });
 
@@ -132,4 +164,5 @@ export const redditApi = createApi({
 export const {
   useGetPostsQuery,
   useSearchPostsQuery,
+  useGetPostCommentsQuery,
 } = redditApi;

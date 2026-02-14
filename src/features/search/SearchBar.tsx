@@ -30,7 +30,6 @@ export function SearchBar() {
   const {
     data,
     error,
-    isLoading,
     isFetching,
   } = useSearchPostsQuery(debouncedSearch, {
     // Only execute the query if:

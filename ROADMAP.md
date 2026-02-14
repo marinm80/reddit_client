@@ -2,9 +2,9 @@
 
 > **Project Goal**: Build a modern, high-performance Reddit client while mastering React 18, Redux Toolkit, TypeScript, and Tailwind CSS 4.
 
-**Last Updated**: 2026-02-13
-**Current Phase**: Phase 3 - Additional Features
-**Overall Progress**: 50% (2.5/5 phases completed)
+**Last Updated**: 2026-02-14
+**Current Phase**: Phase 4 - Testing & Quality
+**Overall Progress**: 60% (3/5 phases completed)
 
 ---
 
@@ -14,7 +14,7 @@
 |-------|--------|----------|-------------|
 | [Phase 1: Initial Configuration](#phase-1-initial-configuration) | ✅ Complete | 100% | Completed |
 | [Phase 2: Core Functionality](#phase-2-core-functionality) | ✅ Complete | 100% | Completed |
-| [Phase 3: Additional Features](#phase-3-additional-features) | 🔄 In Progress | 40% | TBD |
+| [Phase 3: Additional Features](#phase-3-additional-features) | ✅ Complete | 100% | 2026-02-14 |
 | [Phase 4: Testing & Quality](#phase-4-testing--quality) | ⏳ Pending | 0% | TBD |
 | [Phase 5: Polish & Deploy](#phase-5-polish--deploy) | ⏳ Pending | 0% | TBD |
 
@@ -172,9 +172,9 @@ At this stage, the app can:
 
 ## Phase 3: Additional Features
 
-**Status**: 🔄 **IN PROGRESS**
-**Duration**: Ongoing
-**Progress**: 60% (3/5 tasks)
+**Status**: ✅ **COMPLETE**
+**Duration**: 2026-02-13 to 2026-02-14
+**Progress**: 100% (5/5 tasks)
 
 ### Objectives
 
@@ -192,15 +192,18 @@ Extend the application with advanced features: search, filters, comments, and in
   - **Status**: ✅ Complete
   - **Completed**: 2026-02-14
 
-- [ ] **Subreddit Filters** (Priority: High)
-  - [ ] Create `src/features/subreddits/SubredditFilter.tsx`
-  - [ ] Add popular subreddits list (r/popular, r/all, r/reactjs, etc.)
-  - [ ] Implement subreddit dropdown/sidebar
-  - [ ] Connect to `setSubreddit` action
-  - [ ] Persist selected subreddit in URL params
-  - [ ] Add "Custom Subreddit" input field
-  - **Status**: ⏳ Not started
-  - **Estimated effort**: 3-4 hours
+- [x] **Subreddit Filters** (Priority: High)
+  - [x] Create `src/features/subreddits/SubredditFilter.tsx`
+  - [x] Add popular subreddits list (r/popular, r/all, r/reactjs, etc.)
+  - [x] Implement subreddit dropdown/sidebar
+  - [x] Connect to `setSubreddit` action
+  - [x] Persist selected subreddit in URL params
+  - [x] Add "Custom Subreddit" input field
+  - [x] Create `postsSlice.ts` with Redux state
+  - [x] Create `PostCard.tsx` and `PostList.tsx` components
+  - [x] Integrate into main App layout
+  - **Status**: ✅ Complete
+  - **Completed**: 2026-02-14
 
 - [x] **Sort & Time Filters** (Priority: Medium)
   - [x] Add sort buttons (Hot, Top, New, Rising)
@@ -209,15 +212,19 @@ Extend the application with advanced features: search, filters, comments, and in
   - [x] Update API calls based on filters
   - **Status**: ✅ Complete
 
-- [ ] **Comments System** (Priority: High)
-  - [ ] Create `src/features/comments/CommentList.tsx`
-  - [ ] Add `getPostDetails` endpoint (post + comments)
-  - [ ] Implement nested comment threading (recursive component)
-  - [ ] Display comment author, score, timestamp
-  - [ ] Add "Load more comments" for collapsed threads
-  - [ ] Style comments with indentation levels
-  - **Status**: ⏳ Not started
-  - **Estimated effort**: 6-8 hours
+- [x] **Comments System** (Priority: High)
+  - [x] Create `src/features/comments/CommentList.tsx`
+  - [x] Create `src/features/comments/Comment.tsx` (recursive component)
+  - [x] Add `getPostComments` endpoint in RTK Query
+  - [x] Implement nested comment threading (recursive component)
+  - [x] Display comment author, score, timestamp
+  - [x] Add "Load more comments" placeholder for collapsed threads
+  - [x] Style comments with indentation levels (color-coded borders)
+  - [x] Create `PostDetail.tsx` modal component
+  - [x] Integrate modal with PostList
+  - [x] Add keyboard navigation (Escape to close)
+  - **Status**: ✅ Complete
+  - **Completed**: 2026-02-14
 
 - [x] **Infinite Scroll** (Priority: Medium)
   - [x] Implement pagination logic in RTK Query
@@ -228,12 +235,12 @@ Extend the application with advanced features: search, filters, comments, and in
   - [x] Handle "no more posts" state
   - **Status**: ✅ Complete
 
-### Deliverables (Expected)
+### Deliverables (Completed)
 
 - ✅ Full-featured search with debouncing
-- 🔄 Subreddit filter sidebar
+- ✅ Subreddit filter sidebar
 - ✅ Sort and time filters
-- 🔄 Threaded comment display
+- ✅ Threaded comment display with recursive nesting
 - ✅ Infinite scroll pagination
 
 ### Blockers / Risks
@@ -425,7 +432,7 @@ Final polish, accessibility improvements, responsive design refinement, and prod
 | Milestone | Target Date | Status |
 |-----------|-------------|--------|
 | **M1**: MVP (Phases 1-2) | ✅ Completed | ✅ Done |
-| **M2**: Feature Complete (Phase 3) | TBD | 🔄 40% |
+| **M2**: Feature Complete (Phase 3) | 2026-02-14 | ✅ Done |
 | **M3**: Production Ready (Phases 4-5) | TBD | ⏳ Pending |
 | **M4**: Public Launch | TBD | ⏳ Pending |
 

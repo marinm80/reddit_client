@@ -80,8 +80,81 @@ export interface RedditListing {
  * /r/{subreddit}/{sort}.json?limit={limit}&after={after}
  */
 export interface GetPostsParams {
-    subreddit: string;                   // Nombre del subreddit (ej: "popular", "reactjs")
-    sort?: 'hot' | 'new' | 'top' | 'rising'; // Tipo de ordenamiento (default: "hot")
-    limit?: number;                      // Cantidad de posts a devolver (max: 100, default: 25)
-    after?: string;                      // Cursor de paginación (para cargar más posts)
+    subreddit: string;                   // Subreddit name (e.g., "popular", "reactjs")
+    sort?: 'hot' | 'new' | 'top' | 'rising'; // Sort type (default: "hot")
+    limit?: number;                      // Number of posts to return (max: 100, default: 25)
+    after?: string;                      // Pagination cursor (to load more posts)
 }
+
+/**
+ * Reddit Comment Interface
+ *
+ * Represents a single comment from Reddit.
+ * Comments can be nested (replies) forming a tree structure.
+ *
+ * KEY CONCEPT - Recursive Structure:
+ * Each comment can have a 'replies' property that contains more comments,
+ * creating a tree of potentially infinite depth.
+ */
+export interface RedditComment {
+    // Identifiers
+    id: string;                          // Unique comment ID
+    name: string;                        // Full ID with prefix (e.g., "t1_abc123")
+    parent_id: string;                   // Parent comment/post ID
+
+    // Content
+    body: string;                        // Comment text (markdown format)
+    body_html: string;                   // Comment text (HTML format)
+
+    // Metadata
+    author: string;                      // Username of the author
+    subreddit: string;                   // Subreddit name without prefix
+
+    // Statistics
+    score: number;                       // Net points (upvotes - downvotes)
+    ups: number;                         // Number of upvotes
+    downs: number;                       // Number of downvotes
+
+    // Timestamps
+    created_utc: number;                 // Unix timestamp in seconds
+
+    // Nesting & Replies
+    replies: RedditListing | '';         // Nested comments (Listing) or empty string
+    depth: number;                       // Nesting level (0 = top-level)
+
+    // Flags
+    is_submitter: boolean;               // true if author is the post author
+    stickied: boolean;                   // true if comment is pinned
+    score_hidden: boolean;               // true if score is hidden
+    collapsed: boolean;                  // true if comment is collapsed
+}
+
+/**
+ * "More" placeholder for collapsed comments
+ *
+ * Reddit uses this to indicate there are more comments to load.
+ * The 'children' array contains IDs of the hidden comments.
+ */
+export interface RedditMore {
+    count: number;                       // Number of collapsed comments
+    children: string[];                  // Array of comment IDs to load
+    id: string;                          // Unique ID
+    name: string;                        // Full ID with prefix
+    parent_id: string;                   // Parent comment/post ID
+}
+
+/**
+ * Parameters for fetching post details with comments
+ */
+export interface GetPostCommentsParams {
+    subreddit: string;                   // Subreddit name
+    postId: string;                      // Post ID (without "t3_" prefix)
+}
+
+/**
+ * Response from post details endpoint
+ * Reddit returns an array of two Listings:
+ * [0] = Post Listing (1 post)
+ * [1] = Comments Listing (tree of comments)
+ */
+export type PostCommentsResponse = [RedditListing, RedditListing];
