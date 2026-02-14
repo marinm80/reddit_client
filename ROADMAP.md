@@ -3,7 +3,7 @@
 > **Project Goal**: Build a modern, high-performance Reddit client while mastering React 18, Redux Toolkit, TypeScript, and Tailwind CSS 4.
 
 **Last Updated**: 2026-02-13
-**Current Phase**: Phase 3 - Features Adicionales
+**Current Phase**: Phase 3 - Additional Features
 **Overall Progress**: 50% (2.5/5 phases completed)
 
 ---
@@ -12,17 +12,17 @@
 
 | Phase | Status | Progress | Target Date |
 |-------|--------|----------|-------------|
-| [Phase 1: Configuración Inicial](#phase-1-configuración-inicial) | ✅ Complete | 100% | Completed |
-| [Phase 2: Funcionalidad Core](#phase-2-funcionalidad-core) | ✅ Complete | 100% | Completed |
-| [Phase 3: Features Adicionales](#phase-3-features-adicionales) | 🔄 In Progress | 40% | TBD |
+| [Phase 1: Initial Configuration](#phase-1-initial-configuration) | ✅ Complete | 100% | Completed |
+| [Phase 2: Core Functionality](#phase-2-core-functionality) | ✅ Complete | 100% | Completed |
+| [Phase 3: Additional Features](#phase-3-additional-features) | 🔄 In Progress | 40% | TBD |
 | [Phase 4: Testing & Quality](#phase-4-testing--quality) | ⏳ Pending | 0% | TBD |
-| [Phase 5: Pulido & Deploy](#phase-5-pulido--deploy) | ⏳ Pending | 0% | TBD |
+| [Phase 5: Polish & Deploy](#phase-5-polish--deploy) | ⏳ Pending | 0% | TBD |
 
 **Legend**: ✅ Complete | 🔄 In Progress | ⏳ Pending | ⚠️ Blocked
 
 ---
 
-## Phase 1: Configuración Inicial
+## Phase 1: Initial Configuration
 
 **Status**: ✅ **COMPLETE**
 **Duration**: N/A
@@ -89,7 +89,7 @@ Set up the foundational project infrastructure with modern tooling and best prac
 
 ---
 
-## Phase 2: Funcionalidad Core
+## Phase 2: Core Functionality
 
 **Status**: ✅ **COMPLETE**
 **Duration**: N/A
@@ -170,11 +170,11 @@ At this stage, the app can:
 
 ---
 
-## Phase 3: Features Adicionales
+## Phase 3: Additional Features
 
 **Status**: 🔄 **IN PROGRESS**
 **Duration**: Ongoing
-**Progress**: 40% (2/5 tasks)
+**Progress**: 60% (3/5 tasks)
 
 ### Objectives
 
@@ -182,15 +182,15 @@ Extend the application with advanced features: search, filters, comments, and in
 
 ### Tasks
 
-- [ ] **Search System** (Priority: High)
-  - [ ] Create `src/features/search/SearchBar.tsx` component
-  - [ ] Implement debounced search input (`useDebounce` hook)
-  - [ ] Add `searchPosts` endpoint in RTK Query
-  - [ ] Handle search results display
+- [x] **Search System** (Priority: High)
+  - [x] Create `src/features/search/SearchBar.tsx` component
+  - [x] Implement debounced search input (`useDebounce` hook)
+  - [x] Add `searchPosts` endpoint in RTK Query
+  - [x] Handle search results display
   - [ ] Add search history/suggestions (optional)
-  - [ ] Clear search button
-  - **Status**: ⏳ Not started
-  - **Estimated effort**: 4-6 hours
+  - [x] Clear search button
+  - **Status**: ✅ Complete
+  - **Completed**: 2026-02-14
 
 - [ ] **Subreddit Filters** (Priority: High)
   - [ ] Create `src/features/subreddits/SubredditFilter.tsx`
@@ -230,7 +230,7 @@ Extend the application with advanced features: search, filters, comments, and in
 
 ### Deliverables (Expected)
 
-- 🔄 Full-featured search with debouncing
+- ✅ Full-featured search with debouncing
 - 🔄 Subreddit filter sidebar
 - ✅ Sort and time filters
 - 🔄 Threaded comment display
@@ -327,7 +327,7 @@ Achieve comprehensive test coverage, optimize performance, and ensure code quali
 
 ---
 
-## Phase 5: Pulido & Deploy
+## Phase 5: Polish & Deploy
 
 **Status**: ⏳ **PENDING**
 **Duration**: Estimated 1 week
