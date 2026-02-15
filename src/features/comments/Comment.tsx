@@ -8,7 +8,8 @@
  * This component calls itself to render nested comments,
  * creating a tree structure of unlimited depth.
  */
-import type { RedditComment } from '@/types/reddit';
+import type { RedditComment, RedditListing, CommentChild } from '@/types/reddit';
+import { isCommentChild } from '@/types/reddit';
 import { formatScore, formatTimestamp } from '@/utils/formatters';
 import { cn } from '@/utils/cn';
 
@@ -20,8 +21,8 @@ interface CommentProps {
 export function Comment({ comment, depth = 0 }: CommentProps) {
   // Parse replies if they exist
   const hasReplies = typeof comment.replies === 'object' && comment.replies !== null;
-  const replies = hasReplies
-    ? (comment.replies as any).data?.children || []
+  const replies: CommentChild[] = hasReplies
+    ? ((comment.replies as RedditListing<RedditComment>).data?.children as CommentChild[]) || []
     : [];
 
   // Color for depth indicator (cycles through colors)
@@ -85,9 +86,9 @@ export function Comment({ comment, depth = 0 }: CommentProps) {
       {/* Nested Replies (Recursive) */}
       {hasReplies && (
         <div className="comment-replies">
-          {replies.map((reply: any) => {
-            // Skip "more" objects for now (we'll handle them later)
-            if (reply.kind === 'more') {
+          {replies.map((reply: CommentChild) => {
+            // Check if this is a "more" placeholder using type guard
+            if (!isCommentChild(reply)) {
               return (
                 <div
                   key={reply.data.id}

@@ -62,13 +62,15 @@ export interface RedditThing<T> {
  *
  * IMPORTANTE: Reddit pagina los resultados usando cursores (after/before)
  * en lugar de números de página tradicionales.
+ *
+ * GENERIC: Puede contener posts, comments, o cualquier otro tipo
  */
-export interface RedditListing {
+export interface RedditListing<T = RedditPost> {
     kind: 'Listing';                     // Siempre es "Listing" para listas
     data: {
         after: string | null;            // Cursor para siguiente página (null = última página)
         before: string | null;           // Cursor para página anterior
-        children: Array<RedditThing<RedditPost>>; // Array de posts envueltos en RedditThing
+        children: Array<RedditThing<T>>; // Array de items envueltos en RedditThing
     };
 }
 
@@ -119,7 +121,7 @@ export interface RedditComment {
     created_utc: number;                 // Unix timestamp in seconds
 
     // Nesting & Replies
-    replies: RedditListing | '';         // Nested comments (Listing) or empty string
+    replies: RedditListing<RedditComment> | '';  // Nested comments (Listing) or empty string
     depth: number;                       // Nesting level (0 = top-level)
 
     // Flags
@@ -158,3 +160,37 @@ export interface GetPostCommentsParams {
  * [1] = Comments Listing (tree of comments)
  */
 export type PostCommentsResponse = [RedditListing, RedditListing];
+
+/**
+ * Union type for comment children
+ *
+ * Reddit API returns two types of children in comment threads:
+ * - t1: Actual comment with data
+ * - more: Placeholder for collapsed/hidden comments
+ *
+ * This type helps us safely handle both cases without using 'any'.
+ */
+export type CommentChild =
+  | { kind: 't1'; data: RedditComment }
+  | { kind: 'more'; data: RedditMore };
+
+/**
+ * Type guard to check if a child is a comment (not a "more" placeholder)
+ *
+ * @param child - The child to check
+ * @returns true if child is a comment, false if it's a "more" placeholder
+ *
+ * @example
+ * if (isCommentChild(child)) {
+ *   // child.data is RedditComment
+ *   return <Comment comment={child.data} />;
+ * } else {
+ *   // child.data is RedditMore
+ *   return <LoadMore count={child.data.count} />;
+ * }
+ */
+export function isCommentChild(
+  child: CommentChild
+): child is { kind: 't1'; data: RedditComment } {
+  return child.kind === 't1';
+}

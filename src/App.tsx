@@ -1,16 +1,19 @@
 /**
  * Main application component
  *
- * Phase 3: Subreddit Filters + Search + Post List
+ * Phase 4: Testing & Quality - Code splitting with React.lazy
  */
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch } from '@/app/hooks';
 import { setSubreddit } from '@/features/posts/postsSlice';
-import { SubredditFilter } from '@/features/subreddits/SubredditFilter';
-import { SearchBar } from '@/features/search/SearchBar';
-import { PostList } from '@/features/posts/PostList';
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import './App.css';
+
+// Lazy load feature components for better performance
+const SubredditFilter = lazy(() => import('@/features/subreddits/SubredditFilter').then(m => ({ default: m.SubredditFilter })));
+const SearchBar = lazy(() => import('@/features/search/SearchBar').then(m => ({ default: m.SearchBar })));
+const PostList = lazy(() => import('@/features/posts/PostList').then(m => ({ default: m.PostList })));
 
 function App() {
   const dispatch = useAppDispatch();
@@ -40,21 +43,31 @@ function App() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Search Bar */}
+        {/* Search Bar - Lazy loaded with Suspense */}
         <div className="mb-8">
-          <SearchBar />
+          <Suspense fallback={
+            <div className="h-12 bg-surface animate-pulse rounded-md" />
+          }>
+            <SearchBar />
+          </Suspense>
         </div>
 
         {/* Layout: Sidebar + Posts */}
         <div className="flex gap-6">
-          {/* Sidebar - Subreddit Filter */}
+          {/* Sidebar - Subreddit Filter - Lazy loaded */}
           <div className="hidden lg:block flex-shrink-0">
-            <SubredditFilter />
+            <Suspense fallback={
+              <div className="w-64 h-96 bg-surface animate-pulse rounded-lg" />
+            }>
+              <SubredditFilter />
+            </Suspense>
           </div>
 
-          {/* Main Content - Post List */}
+          {/* Main Content - Post List - Lazy loaded */}
           <div className="flex-1 min-w-0">
-            <PostList />
+            <Suspense fallback={<LoadingSpinner />}>
+              <PostList />
+            </Suspense>
           </div>
         </div>
       </div>
